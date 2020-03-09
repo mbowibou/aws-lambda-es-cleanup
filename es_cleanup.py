@@ -166,14 +166,15 @@ class DeleteDecider(object):
         idx_date_str = '-'.join(word for word in idx_split[1:])
         idx_name = idx_split[0]
 
+        if re.search(self.skip_idx_regex, index["index"]):
+            return False, "index matches skip condition"
+
         if not re.search(self.idx_regex, index["index"]):
             return False, "index '{}' name '{}' did not match pattern '{}'".format(index["index"],
                                                                                    idx_name,
                                                                                    self.idx_regex)
 
         earliest_to_keep = self.today - datetime.timedelta(days=self.delete_after)
-        if re.search(self.skip_idx_regex, index["index"]):
-            return False, "index matches skip condition"
 
         try:
             idx_datetime = datetime.datetime.strptime(idx_date_str, self.idx_format)
