@@ -15,12 +15,12 @@ variable "es_endpoint" {
 
 variable "index" {
   description = "Index/indices to process comma separated, with all every index will be processed except '.kibana'"
-  default     = ".*"
+  default     = "all"
 }
 
 variable "skip_index" {
   description = "Index/indices to skip"
-  default     = ".kibana*"
+  default     = ".kibana*,.opendistro*"
 }
 
 variable "delete_after" {
